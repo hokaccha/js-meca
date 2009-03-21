@@ -5,8 +5,9 @@
  * Licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  *
- * @author Kazuhito Hokamura (http://webtech-walker.com/)
- * @version 1.0.0
+ * @author   Kazuhito Hokamura (http://webtech-walker.com/)
+ * @version  1.0.0
+ * @url      http://webtech-walker.com/meca/
  *
  */
 
