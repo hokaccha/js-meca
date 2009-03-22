@@ -15,22 +15,52 @@
     $.Meca = {};
 
     $.Meca.config = {
-        // image hover config setting
-        hoverEnable:   true,    // enable hover image. true or false
-        hoverSelector: '.btn',  // target selector
-        hoverPostfix:  '_o',    // postfix string
+        /*
+         * image hover config setting
+         */ 
 
-        // external link config setting
-        externalEnable:   true,                // enable external link. true or false
-        externalRel:      'external',          // target rel attr. only a element
-        externalSelector: 'a.external',        // target selector. if externalRel is false then this config enable
+        // enable hover image. true or false
+        hoverEnable: true,
 
-        // pngfix config setting
-        pngfixEnable:        true,            // enable hover image. true or false
-        bgpngfixSelector:    '.bgpng',        // background png fix target selector
-        imgpngSelector:      '.pngfix',       // img element png fix target selector
-        imgpngBlankGif:      false,           // blank.gif path. if value is false then img elem wrap span
-        imgpngWrapSpanClass: 'imgpngWrapSpan' // wrap span class that when blank.gif is false
+        // hover image target selector
+        hoverSelector: '.btn',
+
+        // hover image postfix string
+        hoverPostfix: '_o',
+
+
+        /*
+         * external link config setting
+         */
+
+        // enable external link. true or false
+        externalEnable: true,
+
+        // external link target rel attr. only a element
+        externalRel: 'external',
+
+        // external link target selector. if externalRel is false then this config enable
+        externalSelector: 'a.external',
+
+        
+        /*
+         * pngfix config setting
+         */
+
+        // enable hover image. true or false
+        pngfixEnable: true,
+
+        // background png fix target selector
+        bgpngfixSelector: '.bgpng',
+
+        // img element png fix target selector
+        imgpngSelector: '.pngfix',
+
+        // blank.gif path. if value is false then img elem wrap span
+        imgpngBlankGif: false,
+
+        // wrap span class that when blank.gif is false
+        imgpngWrapSpanClass: 'imgpngWrapSpan'
     };
 
     // hover image
