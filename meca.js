@@ -1,12 +1,12 @@
 /*
- * meca.js 1.1.0 markup engineer's coding adminicle javascript library
+ * meca.js 1.0.3 markup engineer's coding adminicle javascript library
  *
  * Copyright (c) 2009 Kazuhito Hokamura
  * Licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  *
  * @author   Kazuhito Hokamura (http://webtech-walker.com/)
- * @version  1.1.0
+ * @version  1.0.3
  * @url      http://webtech-walker.com/meca/
  *
  */
@@ -58,16 +58,6 @@
 
         // wrap span class that when blank.gif is false
         imgpngWrapSpanClass: 'imgpngWrapSpan',
-
-        /*
-         * add extension class
-         */
-
-        // enable add extension class
-        extClassEnable: true,
-
-        // extension list
-        extClassList: ['xls','pdf','doc']
 
     };
 
@@ -136,25 +126,9 @@
 
     };
 
-    // add extension class
-    $.Meca.extClass = function() {
-        if (!$.Meca.config.pngfixEnable) return;
-        $('a').each(function() {
-            var elem = $(this);
-            var src  = elem.attr('href');
-            $($.Meca.config.extClassList).each(function(key,ext) {
-                reg = new RegExp("\\." + ext + "$", 'i');
-                if ( src.match(reg) ) {
-                    elem.addClass(ext);
-                }
-            });
-        });
-    };
-
     $(function() {
         $.Meca.hover();
         $.Meca.external();
         $.Meca.pngfix();
-        $.Meca.extClass();
     });
 })(jQuery);
