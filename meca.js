@@ -1,12 +1,12 @@
 /*
- * meca.js 1.0.1 markup engineer's coding adminicle javascript library
+ * meca.js 1.0.2 markup engineer's coding adminicle javascript library
  *
  * Copyright (c) 2009 Kazuhito Hokamura
  * Licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  *
  * @author   Kazuhito Hokamura (http://webtech-walker.com/)
- * @version  1.0.1
+ * @version  1.0.2
  * @url      http://webtech-walker.com/meca/
  *
  */
@@ -36,11 +36,8 @@
         // enable external link. true or false
         externalEnable: true,
 
-        // external link target rel attr. only a element
-        externalRel: 'external',
-
         // external link target selector. if externalRel is false then this config enable
-        externalSelector: 'a.external',
+        externalSelector: 'a[rel~="external"]',
 
         
         /*
@@ -81,17 +78,7 @@
     // external link
     $.Meca.external = function() {
         if (!$.Meca.config.externalEnable) return;
-        if ($.Meca.config.externalRel) {
-            var reg = new RegExp('(?:^|[ \\n\\r\\t])' + $.Meca.config.externalRel + '(?:[ \\n\\r\\t]|$)');
-            $('a').each(function() {
-                if (reg.test($(this).attr('rel'))) {
-                    $(this).attr('target', '_blank');
-                }
-            });
-        }
-        else {
-            $($.Meca.config.externalSelector).attr('target', '_blank');
-        }
+        $($.Meca.config.externalSelector).attr('target', '_blank');
     };
 
     // alpha png image for IE6
