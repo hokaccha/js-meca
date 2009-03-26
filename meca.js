@@ -1,12 +1,12 @@
 /*
- * meca.js 1.0.3 markup engineer's coding adminicle javascript library
+ * meca.js 1.0.4 markup engineer's coding adminicle javascript library
  *
  * Copyright (c) 2009 Kazuhito Hokamura
  * Licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  *
  * @author   Kazuhito Hokamura (http://webtech-walker.com/)
- * @version  1.0.3
+ * @version  1.0.4
  * @url      http://webtech-walker.com/meca/
  *
  */
@@ -57,7 +57,7 @@
         imgpngBlankGif: false,
 
         // wrap span class that when blank.gif is false
-        imgpngWrapSpanClass: 'imgpngWrapSpan',
+        imgpngWrapSpanClass: 'imgpngWrapSpan'
 
     };
 
