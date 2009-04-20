@@ -6,7 +6,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  *
  * @author   Kazuhito Hokamura (http://webtech-walker.com/)
- * @version  1.1.0
+ * @version  1.1.1
  * @url      http://webtech-walker.com/meca/
  *
  */
@@ -75,6 +75,7 @@
     $.Meca.hover.exec = function() {
         if (!$.Meca.hover.config.enable) return;
         $($.Meca.hover.config.selector).each(function() {
+            if (!$(this).attr('src')) return;
             var src   = this.src;
             var src_o = this.src.replace(/\.\w+$/, $.Meca.hover.config.postfix + '$&');
             var img   = new Image();
