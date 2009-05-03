@@ -159,7 +159,7 @@
         if (!$.Meca.heightAlign.config.enable) return;
         var maxHeight = 0;
         $($.Meca.heightAlign.config.selector).each(function() {
-            height = $(this).height();
+            var height = $(this).height();
             if (maxHeight < height) {
                 maxHeight = height;
             }
