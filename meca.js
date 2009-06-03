@@ -1,12 +1,12 @@
 /*
- * meca.js 1.1.4 markup engineer's coding adminicle javascript library
+ * meca.js 1.1.5 markup engineer's coding adminicle javascript library
  *
  * Copyright (c) 2009 Kazuhito Hokamura
  * Licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  *
  * @author   Kazuhito Hokamura (http://webtech-walker.com/)
- * @version  1.1.4
+ * @version  1.1.5
  * @url      http://webtech-walker.com/meca/
  * @github   http://github.com/hokaccha/meca/tree/master
  *
