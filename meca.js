@@ -1,12 +1,12 @@
 /*
- * meca.js 1.1.3 markup engineer's coding adminicle javascript library
+ * meca.js 1.1.4 markup engineer's coding adminicle javascript library
  *
  * Copyright (c) 2009 Kazuhito Hokamura
  * Licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  *
  * @author   Kazuhito Hokamura (http://webtech-walker.com/)
- * @version  1.1.3
+ * @version  1.1.4
  * @url      http://webtech-walker.com/meca/
  * @github   http://github.com/hokaccha/meca/tree/master
  *
@@ -62,8 +62,9 @@
     $.Meca.heightAlign = {};
     $.Meca.heightAlign.config = {};
 
-    $.Meca.heightAlign.config.enable   = true;
-    $.Meca.heightAlign.config.selector = 'ul.heightAlign li';
+    $.Meca.heightAlign.config.enable         = true;
+    $.Meca.heightAlign.config.selectorParent = '.heightAlign';
+    $.Meca.heightAlign.config.selectorChild  = '> *';
 
     /**
      * position fiexd config setting
@@ -74,6 +75,27 @@
 
     $.Meca.positionFixed.config.enable = true;
 
+    /**
+     * word break config setting
+     */
+
+    $.Meca.wordBreak = {};
+    $.Meca.wordBreak.config = {};
+
+    $.Meca.wordBreak.config.enable = true;
+    $.Meca.wordBreak.config.selector = '.wordBreak';
+
+    /**
+     * url break config setting
+     */
+
+/*
+    $.Meca.urlBreak = {};
+    $.Meca.urlBreak.config = {};
+
+    $.Meca.urlBreak.config.enable = true;
+    $.Meca.urlBreak.config.selector = '.urlBreak';
+*/
 
     /*
      * exec modules
@@ -157,13 +179,23 @@
      */
     $.Meca.heightAlign.exec = function() {
         if (!$.Meca.heightAlign.config.enable) return;
-        var maxHeight = 0;
-        $($.Meca.heightAlign.config.selector).each(function() {
-            var height = $(this).height();
-            if (maxHeight < height) {
-                maxHeight = height;
-            }
-        }).height(maxHeight);
+        var heightAlignExec = function() {
+            $($.Meca.heightAlign.config.selectorParent).each(function() {
+                var maxHeight = 0;
+                $(this).find($.Meca.heightAlign.config.selectorChild).each(function() {
+                    var height = $(this).height();
+                    if (maxHeight < height) {
+                        maxHeight = height;
+                    }
+                }).height(maxHeight);
+            });
+        };
+        if ($.browser.opera == true) {
+            heightAlignExec();
+        }
+        else {
+            $(window).load(heightAlignExec);
+        }
     };
 
     /**
@@ -200,6 +232,40 @@
                     });
                 });
             }
+        }
+    };
+
+    /**
+     * word break
+     */
+    $.Meca.wordBreak.exec = function() {
+        if (!$.Meca.wordBreak.config.enable) return;
+        $($.Meca.wordBreak.config.selector).each(function() {
+            if($.browser.msie) {
+                $(this).css('word-break', 'break-all');
+            }
+            else {
+                $.Meca.util.splitText($(this));
+            }
+        });
+    };
+
+
+    $.Meca.util = {
+        splitText: function(elem) {
+            var span;
+            var splited;
+            var splitter = (navigator.userAgent.indexOf('Firefox/2') != -1) ? '<wbr />' : String.fromCharCode(8203);
+            elem.contents().each(function() {
+                if (this.nodeType == 1) {
+                    $.Meca.util.splitText($(this));
+                }
+                else if (this.nodeType == 3) {
+                    span    = $(this).wrap('<span/>').parent();
+                    splited = span.text().split('').join(splitter);
+                    span.after(splited).remove();
+                }
+            });
         }
     };
 
