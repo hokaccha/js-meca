@@ -225,12 +225,13 @@
                     })
                 ;
 
-                $(window).scroll(function() {
-                    self.css({
-                        top:  $(document).scrollTop()  + baseTop,
-                        left: $(document).scrollLeft() + baseLeft
-                    });
+                $('html').css({
+                    'background-image': 'url(null)',
+                    'background-attachment': 'fixed'
                 });
+
+                elem['topVal'] = baseTop;
+                elem.style.setExpression('top', 'documentElement.scrollTop + this.topVal + "px"');
             }
         }
     };
