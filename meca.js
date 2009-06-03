@@ -1,12 +1,12 @@
 /*
- * meca.js 1.1.5 markup engineer's coding adminicle javascript library
+ * meca.js 1.1.6 markup engineer's coding adminicle javascript library
  *
  * Copyright (c) 2009 Kazuhito Hokamura
  * Licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  *
  * @author   Kazuhito Hokamura (http://webtech-walker.com/)
- * @version  1.1.5
+ * @version  1.1.6
  * @url      http://webtech-walker.com/meca/
  * @github   http://github.com/hokaccha/meca/tree/master
  *
@@ -209,29 +209,7 @@
         for (var i = 0, len = elems.length; i < len; i++) {
             var elem = elems[i];
             if (elem.currentStyle.position == 'fixed') {
-                var self = $(elem);
-                var baseTop  = parseInt(self.css('top'))  || 0;
-                var baseLeft = parseInt(self.css('left')) || 0;
-
-                self.css({
-                        position: 'absolute',
-                        top:  $(document).scrollTop()  + baseTop,
-                        left: $(document).scrollLeft() + baseLeft
-                    })
-                    .parents().each(function() {
-                        if ($(this).css('position') == 'relative') {
-                            $(this).after(self);
-                        }
-                    })
-                ;
-
-                $('html').css({
-                    'background-image': 'url(null)',
-                    'background-attachment': 'fixed'
-                });
-
-                elem['topVal'] = baseTop;
-                elem.style.setExpression('top', 'documentElement.scrollTop + this.topVal + "px"');
+                $.Meca.util.fixed(elem);
             }
         }
     };
@@ -267,6 +245,32 @@
                     span.after(splited).remove();
                 }
             });
+        },
+
+        fixed: function(elem) {
+            var self = $(elem);
+            var baseTop  = parseInt(self.css('top'))  || 0;
+            var baseLeft = parseInt(self.css('left')) || 0;
+
+            self.css({
+                    position: 'absolute',
+                    top:  $(document).scrollTop()  + baseTop,
+                    left: $(document).scrollLeft() + baseLeft
+                })
+                .parents().each(function() {
+                    if ($(this).css('position') == 'relative') {
+                        $(this).after(self);
+                    }
+                })
+            ;
+
+            $('html').css({
+                'background-image': 'url(null)',
+                'background-attachment': 'fixed'
+            });
+
+            elem['topVal'] = baseTop;
+            elem.style.setExpression('top', 'documentElement.scrollTop + this.topVal + "px"');
         }
     };
 
