@@ -1,5 +1,5 @@
 /*
- * meca.js 1.1.6 markup engineer's coding adminicle javascript library
+ * meca.js 1.1.7 markup engineer's coding adminicle javascript library
  *
  * Copyright (c) 2009 Kazuhito Hokamura
  * Licensed under the MIT License:
