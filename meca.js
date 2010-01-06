@@ -1,12 +1,12 @@
 /*
- * meca.js 1.1.7 markup engineer's coding adminicle javascript library
+ * meca.js 1.1.8 markup engineer's coding adminicle javascript library
  *
  * Copyright (c) 2009 Kazuhito Hokamura
  * Licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  *
  * @author   Kazuhito Hokamura (http://webtech-walker.com/)
- * @version  1.1.7
+ * @version  1.1.8
  * @url      http://webtech-walker.com/meca/
  * @github   http://github.com/hokaccha/meca/tree/master
  *
@@ -52,7 +52,7 @@
     $.Meca.pngfix.config.enable              = true;
     $.Meca.pngfix.config.bgpngSelector       = '.bgpng';
     $.Meca.pngfix.config.imgpngSelector      = '.pngfix';
-    $.Meca.pngfix.config.imgpngHoverSelector = '.pngfixBtn';
+    $.Meca.pngfix.config.imgpngHoverSelector = '.pngfix.btn';
     $.Meca.pngfix.config.postfix             = '_o';
     $.Meca.pngfix.config.blankGif            = false;
     $.Meca.pngfix.config.wrapSpanClass       = 'imgpngWrapSpan';
@@ -126,6 +126,7 @@
      */
     $.Meca.pngfix.exec = function() {
         if (!$.Meca.pngfix.config.enable) return;
+        if (!($.browser.msie && $.browser.version == "6.0")) return;
 
         var getFilterStyle = function(src, sizing) {
             var dx = 'DXImageTransform.Microsoft.AlphaImageLoader';
@@ -141,33 +142,17 @@
             };
         };
 
-        if ($.browser.msie && $.browser.version == "6.0") {
-            // background png to alpha png
-            $($.Meca.pngfix.config.bgpngSelector).each(function() {
-                var bgpngSrc    = $(this).css('backgroundImage').slice(5,-2);
-                var bgpngSizing = ($(this).css('backgroundRepeat') === 'no-repeat') ? 'crop' : 'scale';
-                var bgpngStyle  = {
-                    'filter': getFilterStyle(bgpngSrc, bgpngSizing),
-                    'background-image': 'none',
-                    'zoom': '1'
-                };
-                $(this).css(bgpngStyle);
-            });
-
-            // img element png to alpha png
-            $($.Meca.pngfix.config.imgpngSelector).each(function() {
-                if ($.Meca.pngfix.config.blankGif) {
-                    $(this).css(getImgpngStyle($(this)))
-                           .attr('src', $.Meca.pngfix.config.blankGif);
-                }
-                else {
-                    var wrapSpan = $(document.createElement('span'))
-                        .addClass($.Meca.pngfix.config.wrapSpanClass)
-                        .css(getImgpngStyle($(this)));
-                    $(this).css('display', 'none').wrap(wrapSpan);
-                }
-            });
-        }
+        // background png to alpha png
+        $($.Meca.pngfix.config.bgpngSelector).each(function() {
+            var bgpngSrc    = $(this).css('backgroundImage').slice(5,-2);
+            var bgpngSizing = ($(this).css('backgroundRepeat') === 'no-repeat') ? 'crop' : 'scale';
+            var bgpngStyle  = {
+                'filter': getFilterStyle(bgpngSrc, bgpngSizing),
+                'background-image': 'none',
+                'zoom': '1'
+            };
+            $(this).css(bgpngStyle);
+        });
 
         // with hover
         $($.Meca.pngfix.config.imgpngHoverSelector).each(function() {
@@ -177,34 +162,43 @@
             var img   = new Image();
             img.src   = src_o;
 
-            if ($.browser.msie && $.browser.version == "6.0") {
-                if ($.Meca.pngfix.config.blankGif) {
-                    $self.css(getImgpngStyle($self))
-                         .attr('src', $.Meca.pngfix.config.blankGif);
+            if ($.Meca.pngfix.config.blankGif) {
+                $self.css(getImgpngStyle($self))
+                     .attr('src', $.Meca.pngfix.config.blankGif);
 
-                    $(this).hover(
-                        function() { $self.css('filter', getFilterStyle(src_o, 'proc')) },
-                        function() { $self.css('filter', getFilterStyle(src, 'proc')) }
-                    );
-                }
-                else {
-                    var wrapSpan = $(document.createElement('span'))
-                        .addClass($.Meca.pngfix.config.wrapSpanClass)
-                        .css(getImgpngStyle($self));
-                    $self
-                        .css('display', 'none').wrap(wrapSpan).parent()
-                        .hover(
-                            function() { $(this).css('filter', getFilterStyle(src_o, 'proc')) },
-                            function() { $(this).css('filter', getFilterStyle(src, 'proc')) }
-                        )
-                    ;
-                }
+                $(this).hover(
+                    function() { $self.css('filter', getFilterStyle(src_o, 'proc')) },
+                    function() { $self.css('filter', getFilterStyle(src, 'proc')) }
+                );
             }
             else {
-                $self.hover(
-                    function() { this.src = src_o },
-                    function() { this.src = src }
-                );
+                var wrapSpan = $(document.createElement('span'))
+                    .addClass($.Meca.pngfix.config.wrapSpanClass)
+                    .css(getImgpngStyle($self));
+                $self
+                    .css('display', 'none').wrap(wrapSpan).parent()
+                    .hover(
+                        function() { $(this).css('filter', getFilterStyle(src_o, 'proc')) },
+                        function() { $(this).css('filter', getFilterStyle(src, 'proc')) }
+                    )
+                ;
+            }
+
+            $.data(this, 'pngfixed', 'fixed');
+        });
+
+        // img element png to alpha png
+        $($.Meca.pngfix.config.imgpngSelector).each(function() {
+            if ($.data(this, 'pngfixed') == 'fixed') return;
+            if ($.Meca.pngfix.config.blankGif) {
+                $(this).css(getImgpngStyle($(this)))
+                       .attr('src', $.Meca.pngfix.config.blankGif);
+            }
+            else {
+                var wrapSpan = $(document.createElement('span'))
+                    .addClass($.Meca.pngfix.config.wrapSpanClass)
+                    .css(getImgpngStyle($(this)));
+                $(this).css('display', 'none').wrap(wrapSpan);
             }
         });
     };
