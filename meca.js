@@ -88,6 +88,17 @@
     $.Meca.wordBreak.config.enable = true;
     $.Meca.wordBreak.config.selector = '.wordBreak';
 
+    /**
+     * smooth scroll config setting
+     */
+
+    $.Meca.smoothScroll = {};
+    $.Meca.smoothScroll.config = {};
+
+    $.Meca.smoothScroll.config.enable        = true;
+    $.Meca.smoothScroll.config.duration      = 'normal';
+    $.Meca.smoothScroll.config.easing        = 'swing';
+    $.Meca.smoothScroll.config.noAnchorClass = ['goPageTop'];
 
     /*
      * exec modules
@@ -301,6 +312,36 @@
             elem['topVal'] = baseTop;
             elem.style.setExpression('top', 'documentElement.scrollTop + this.topVal + "px"');
         }
+    };
+
+
+    $.Meca.smoothScroll.exec = function() {
+        if (!$.Meca.smoothScroll.config.enable) return;
+
+        $('a[href^="#"]').click(function() {
+            var $elem = $(this);
+            
+            // ターゲット要素がなかったら何もしない
+            var $target = $($elem.attr('href'));
+            if (!$target.length) return;
+
+            // スムーズスクロールにする
+            $('html, body').animate({
+                scrollTop: $target.offset().top
+            },
+            $.Meca.smoothScroll.config.duration,
+            $.Meca.smoothScroll.config.easing);
+
+            // noAnchorClassに指定したclass名があったらfalseを返す（URLの最後に#がつかない）
+            // ただしすでに#がついてる場合は#以降をトルのみ。#自体はとれないみたい
+            var classes = $.Meca.smoothScroll.config.noAnchorClass;
+            for (var i = 0, len = classes.length; i < len; i++) {
+                if ($elem.hasClass(classes[i])) {
+                    if (location.hash) location.hash = '';
+                    return false;
+                }
+            }
+        });
     };
 
     $(function() {
