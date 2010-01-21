@@ -1,0 +1,331 @@
+@charset "utf-8";
+
+/*==================================================
+
+Base Style Sheet
+
+1. body
+2. anchor
+3. text
+4. list
+5. table
+6. form
+7. object
+8. hack
+9. contents style
+
+
+[font-size adjust]
+
+10px  72%
+11px  79%
+12px  86%
+13px  93%
+14px  100%
+15px  108%
+16px  115%
+17px  122%
+18px  129%
+19px  136%
+20px  143%
+21px  150%
+22px  158%
+23px  165%
+24px  172%
+25px  179%
+26px  186%
+
+==================================================*/
+
+
+/*
+ 1. body
+---------------------------------*/
+
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #000;
+    font-family: verdana,Arial,sans-serif;
+}
+
+*html body {
+    font-size: 88%;
+}
+
+*+html body {
+    font-size: 88%;
+}
+
+/*
+ 2. anchor
+---------------------------------*/
+
+a {
+    color: #00F;
+}
+
+a:visited {
+    color: #808;
+}
+
+a:hover {
+    color: #C00;
+}
+
+
+/*
+ 3. text
+---------------------------------*/
+
+h1,h2,h3,h4,h5,h6{
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+}
+
+p {
+    margin: 10px 0;
+}
+
+em {
+    font-style: normal;
+}
+
+address {
+    font-style: normal;
+}
+
+code {
+    zoom: normal; 
+}
+
+/*
+ 4. list
+---------------------------------*/
+
+ul {
+    list-style: circle;
+}
+
+ul,ol {
+    padding: 0 0 0 20px;
+    margin: 0;
+}
+
+li {
+    margin: 5px 0;
+    padding: 0;
+}
+
+dl,dt,dd {
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ 5. table
+---------------------------------*/
+
+table {
+    border-collapse: collapse;
+    font-size: inherit;
+}
+
+table td,
+table th {
+    border: 1px solid #000;
+    padding: 5px;
+}
+
+table th {
+    background: #EEE;
+}
+
+
+/*
+ 6. form
+---------------------------------*/
+
+form {
+    margin: 0;
+    padding: 0;
+}
+
+fieldset {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+legend {
+    color: #000;
+}
+
+input,textarea {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+input {
+    line-height: 1.2;
+}
+
+textarea {
+    padding: 0.2em;
+}
+
+
+/*
+ 7. object
+---------------------------------*/
+
+img {
+    border: none;
+    vertical-align: bottom;
+}
+
+object,embed {
+    vertical-align: bottom;
+}
+
+/*
+ 8. hack
+---------------------------------*/
+
+* {
+    zoom: 1;
+}
+
+*:first-child+html body, 
+*:first-child+html br { 
+    letter-spacing: 0; 
+}
+
+/*
+ 9. contents style
+---------------------------------*/
+
+div.container {
+    width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+h1 {
+    font-size: 172%;
+    border-bottom: 2px solid #78CF19;
+    padding: 20px 0;
+    margin-bottom: 20px;
+}
+
+p.description {
+    margin: 10px 0 20px;
+}
+
+div.section {
+    margin: 20px 0 50px;
+    /margin-bottom: 0;
+}
+
+div.section div.section {
+    padding: 0;
+    margin: 0 0 30px 0;
+    /margin-bottom: 0;
+    border: 0;
+}
+
+h2 {
+    padding: 5px 0 5px 10px;
+    margin-bottom: 10px;
+    background: #EFEFEF;
+    border-left: 5px solid #78CF19;
+    font-size: 115%;
+}
+
+h3 {
+    padding: 3px 0 3px 10px;
+    margin: 20px 0;
+    border-left: 5px solid #08138F;
+}
+
+pre {
+    padding: 10px;
+    margin: 10px 0;
+    background: #DFDFB5;
+    overflow: auto;
+    zoom: normal;
+}
+
+div#how_to_use div.section {
+    margin-top: 20px;
+}
+
+div.config div.section {
+    margin-bottom: 30px;
+}
+
+div.config h4 {
+    color: #600;
+}
+
+div.config dl dt {
+    position: absolute;
+    width: 5em;
+    margin: 10px 0;
+    border-right: 2px solid #999;
+    font-weight: bold;
+}
+
+div.config dl dd {
+    padding: 10px 0 10px 6em;
+}
+
+div.bg {
+    background: url(../img/sample_bg.jpg) no-repeat;
+    width: 500px;
+    height: 200px;
+    padding: 50px;
+}
+
+div#pngfix_bg_norepeat {
+    background: url(../img/sample_bg.png) no-repeat;
+    padding: 10px 40px;
+    color: #FFF;
+}
+
+div#pngfix_bg_repeat {
+    background: url(../img/sample_bg.png) repeat-y;
+    padding: 10px 40px;
+    color: #FFF;
+    height: 180px;
+}
+
+ul.heightAlign {
+    list-style: none;
+}
+
+ul.heightAlign:after {
+    content: ".";
+    visibility: hidden;
+    height: 0;
+    display: block;
+    clear: both;
+    line-height: 0;
+}
+
+ul.heightAlign li {
+    padding: 0;
+    margin: 5px;
+    width: 200px;
+    float: left;
+}
+
+ul#heightAlignRed li {
+    border: 1px solid #C00;
+}
+
+ul#heightAlignBlue li {
+    border: 1px solid #00C;
+}
