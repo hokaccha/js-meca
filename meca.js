@@ -1,12 +1,12 @@
 /*
- * meca.js 1.1.9 markup engineer's coding adminicle javascript library
+ * meca.js 1.1.10 markup engineer's coding adminicle javascript library
  *
  * Copyright (c) 2009 Kazuhito Hokamura
  * Licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  *
  * @author   Kazuhito Hokamura (http://webtech-walker.com/)
- * @version  1.1.9
+ * @version  1.1.10
  * @url      http://webtech-walker.com/meca/
  * @github   http://github.com/hokaccha/meca/tree/master
  *
@@ -98,7 +98,7 @@
     $.Meca.smoothScroll.config.enable   = true;
     $.Meca.smoothScroll.config.duration = 'normal';
     $.Meca.smoothScroll.config.easing   = 'swing';
-    $.Meca.smoothScroll.config.excludeHashSelector = '.goPageTop';
+    $.Meca.smoothScroll.config.excludeHashSelector = 'p.goPageTop a';
 
     /*
      * exec modules
@@ -328,15 +328,20 @@
 
             // スムーズスクロールにする
             $('html, body').animate({
-                scrollTop: $target.offset().top
-            },
-            $.Meca.smoothScroll.config.duration,
-            $.Meca.smoothScroll.config.easing);
-
-            if ($elem.is($.Meca.smoothScroll.config.excludeHashSelector)) {
-                if (location.hash) location.hash = '';
-                return false;
-            }
+                    scrollTop: $target.offset().top
+                },
+                $.Meca.smoothScroll.config.duration,
+                $.Meca.smoothScroll.config.easing,
+                function() {
+                    if ($elem.is($.Meca.smoothScroll.config.excludeHashSelector)) {
+                        if (location.hash) location.hash = '';
+                    }
+                    else {
+                        location.hash = $elem.attr('href');
+                    }
+                }
+            );
+            return false;
         });
     };
 
