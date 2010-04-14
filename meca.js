@@ -1,5 +1,5 @@
 /*
- * meca.js 1.1.10 markup engineer's coding adminicle javascript library
+ * meca.js 1.1.11 markup engineer's coding adminicle javascript library
  *
  * Copyright (c) 2009 Kazuhito Hokamura
  * Licensed under the MIT License:
@@ -187,7 +187,7 @@
                     .addClass($.Meca.pngfix.config.wrapSpanClass)
                     .css(getImgpngStyle($self));
                 $self
-                    .css('display', 'none').wrap(wrapSpan).parent()
+                    .css('visibility', 'hidden').wrap(wrapSpan).parent()
                     .hover(
                         function() { $(this).css('filter', getFilterStyle(src_o, 'proc')) },
                         function() { $(this).css('filter', getFilterStyle(src, 'proc')) }
@@ -209,7 +209,7 @@
                 var wrapSpan = $(document.createElement('span'))
                     .addClass($.Meca.pngfix.config.wrapSpanClass)
                     .css(getImgpngStyle($(this)));
-                $(this).css('display', 'none').wrap(wrapSpan);
+                $(this).css('visibility', 'hidden').wrap(wrapSpan);
             }
         });
     };
