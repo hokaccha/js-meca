@@ -85,7 +85,7 @@
     $.Meca.wordBreak = {};
     $.Meca.wordBreak.config = {};
 
-    $.Meca.wordBreak.config.enable = true;
+    $.Meca.wordBreak.config.enable = false;
     $.Meca.wordBreak.config.selector = '.wordBreak';
 
     /**
