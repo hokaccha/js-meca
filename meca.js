@@ -1,12 +1,12 @@
 /*
- * meca.js 1.1.11 markup engineer's coding adminicle javascript library
+ * meca.js 1.1.12 markup engineer's coding adminicle javascript library
  *
  * Copyright (c) 2009 Kazuhito Hokamura
  * Licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  *
  * @author   Kazuhito Hokamura (http://webtech-walker.com/)
- * @version  1.1.10
+ * @version  1.1.12
  * @url      http://webtech-walker.com/meca/
  * @github   http://github.com/hokaccha/meca/tree/master
  *
@@ -99,6 +99,17 @@
     $.Meca.smoothScroll.config.duration = 'normal';
     $.Meca.smoothScroll.config.easing   = 'swing';
     $.Meca.smoothScroll.config.excludeHashSelector = 'p.goPageTop a';
+
+    /**
+     * add os class config setting
+     */
+    
+    $.Meca.addOsClass = {};
+    $.Meca.addOsClass.config = {};
+
+    $.Meca.addOsClass.config.enable = true;
+    $.Meca.addOsClass.config.winClass = 'osWin';
+    $.Meca.addOsClass.config.macClass = 'osMac';
 
     /*
      * exec modules
@@ -312,7 +323,6 @@
             elem['topVal'] = baseTop;
             elem.style.setExpression('top', 'documentElement.scrollTop + this.topVal + "px"');
         }
-        // fuga
     };
 
 
@@ -344,6 +354,18 @@
             return false;
         });
     };
+
+    $.Meca.addOsClass.exec = function() {
+        if (!$.Meca.addOsClass.config.enable) return;
+
+        var ua = navigator.userAgent.toLowerCase();
+        if (/windows/.test(ua)) {
+            $('body').addClass($.Meca.addOsClass.config.winClass);
+        }
+        else if (/mac os x/.test(ua)) {
+            $('body').addClass($.Meca.addOsClass.config.macClass);
+        }
+    }
 
     $(function() {
         for (var module in $.Meca) {
