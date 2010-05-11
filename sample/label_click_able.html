@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="content-style-type" content="text/css" />
+    <meta http-equiv="content-script-type" content="text/javascript" />
+    <title>meca.js</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="all" />
+<style type="text/css">
+div {
+    margin: 20px 0;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>meca.js</h1>
+
+<div>
+<label for="label1"><img src="img/sample_btn.gif" alt="sample" /></label>
+<input type="text" id="label1" />
+</div>
+
+<div>
+<label for="label2"><img src="img/sample_btn.gif" alt="sample" /></label>
+<input type="radio" id="label2" value="1" name="1" />
+<label for="label3"><img src="img/sample_btn.gif" alt="sample" /></label>
+<input type="radio" id="label3" value="2" name="1" />
+</div>
+
+<div>
+<label for="label4"><img src="img/sample_btn.gif" alt="sample" /></label>
+<input type="checkbox" id="label4" value="1" name="1" />
+</div>
+
+</div>
+</div>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="../meca.js"></script>
+<script type="text/javascript">
+$.Meca.labelClickable.config.enable = true;
+</script>
+
+</body>
+</html>

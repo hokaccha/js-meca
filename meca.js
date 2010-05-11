@@ -1,12 +1,12 @@
 /*
- * meca.js 1.1.12 markup engineer's coding adminicle javascript library
+ * meca.js 1.1.13 markup engineer's coding adminicle javascript library
  *
  * Copyright (c) 2009 Kazuhito Hokamura
  * Licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  *
  * @author   Kazuhito Hokamura (http://webtech-walker.com/)
- * @version  1.1.12
+ * @version  1.1.13
  * @url      http://webtech-walker.com/meca/
  * @github   http://github.com/hokaccha/meca/tree/master
  *
@@ -110,6 +110,16 @@
     $.Meca.addOsClass.config.enable = true;
     $.Meca.addOsClass.config.winClass = 'osWin';
     $.Meca.addOsClass.config.macClass = 'osMac';
+
+    /**
+     * label click able class config setting
+     */
+
+    $.Meca.labelClickable = {};
+    $.Meca.labelClickable.config = {};
+    
+    $.Meca.labelClickable.config.enable = false;
+
 
     /*
      * exec modules
@@ -365,7 +375,17 @@
         else if (/mac os x/.test(ua)) {
             $('body').addClass($.Meca.addOsClass.config.macClass);
         }
-    }
+    };
+
+    $.Meca.labelClickable.exec = function() {
+        if (!$.Meca.labelClickable.config.enable) return;
+
+        if(!$.browser.msie) return;
+
+        $('label img').click(function(){
+            $('#' + $(this).parents('label').attr('for')).focus().click();
+        });
+    };
 
     $(function() {
         for (var module in $.Meca) {
