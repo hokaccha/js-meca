@@ -1,12 +1,12 @@
 /*
- * meca.js 1.1.13 markup engineer's coding adminicle javascript library
+ * meca.js 1.1.14 markup engineer's coding adminicle javascript library
  *
  * Copyright (c) 2009 Kazuhito Hokamura
  * Licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  *
  * @author   Kazuhito Hokamura (http://webtech-walker.com/)
- * @version  1.1.13
+ * @version  1.1.14
  * @url      http://webtech-walker.com/meca/
  * @github   http://github.com/hokaccha/meca/tree/master
  *
@@ -119,6 +119,18 @@
     $.Meca.labelClickable.config = {};
     
     $.Meca.labelClickable.config.enable = false;
+
+
+    /**
+     * image hover config setting
+     */ 
+
+    $.Meca.active = {};
+    $.Meca.active.config = {};
+
+    $.Meca.active.config.enable   = true;
+    $.Meca.active.config.selector = '.hasActive';
+    $.Meca.active.config.postfix  = '_a';
 
 
     /*
@@ -384,6 +396,23 @@
 
         $('label img').click(function(){
             $('#' + $(this).parents('label').attr('for')).focus().click();
+        });
+    };
+
+
+    /**
+     * active image
+     */
+    $.Meca.active.exec = function() {
+        if (!$.Meca.active.config.enable) return;
+        $($.Meca.active.config.selector).each(function() {
+            if (!$(this).attr('src')) return;
+            var src   = this.src;
+            var src_a = this.src.replace(/\.\w+$/, $.Meca.active.config.postfix + '$&');
+            var img   = new Image();
+            img.src   = src_a;
+            $(this).mousedown(function() { this.src = src_a; });
+            $(this).mouseup(function() { this.src = src; });
         });
     };
 
