@@ -405,14 +405,22 @@
      */
     $.Meca.active.exec = function() {
         if (!$.Meca.active.config.enable) return;
+        var hover_conf = $.Meca.hover.config;
+
         $($.Meca.active.config.selector).each(function() {
-            if (!$(this).attr('src')) return;
+            var self = $(this);
+            if (!self.attr('src')) return;
             var src   = this.src;
             var src_a = this.src.replace(/\.\w+$/, $.Meca.active.config.postfix + '$&');
+            var src_base = src;
+            if (hover_conf.enable && self.is(hover_conf.selector)) {
+                src_base = src.replace(/\.\w+$/, hover_conf.postfix + '$&');
+            }
+
             var img   = new Image();
             img.src   = src_a;
-            $(this).mousedown(function() { this.src = src_a; });
-            $(this).mouseup(function() { this.src = src; });
+            self.mousedown(function() { this.src = src_a; });
+            self.mouseup(function() { this.src = src_base });
         });
     };
 
