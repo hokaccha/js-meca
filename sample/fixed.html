@@ -11,7 +11,8 @@
 div.section {
     position: relative;
 }
-.fixed_box {
+
+.fixed {
     position: fixed;
     top:      10px;
     left:     500px;
@@ -26,7 +27,7 @@ div.section {
 <h1>meca.js</h1>
 <div class="section">
     <h2>position fixed for IE6 DEMO</h2>
-    <div class="fixed_box">fixed box</div>
+    <div class="fixed">fixed box</div>
     <p>ダミーテキストダミーテキストダミーテキストダミーテキスト</p>
     <p>ダミーテキストダミーテキストダミーテキストダミーテキスト</p>
     <p>ダミーテキストダミーテキストダミーテキストダミーテキスト</p>
@@ -72,6 +73,11 @@ div.section {
 </div>
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="../meca.js"></script>
+<script type="text/javascript">
+$(function() {
+    $('.fixed').meca('positionFixed');
+});
+</script>
 
 </body>
 </html>

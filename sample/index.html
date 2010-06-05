@@ -11,151 +11,53 @@
 <body>
 <div class="container" id="top">
 <h1>meca.js</h1>
-<div class="section">
-    <h2>meca.jsについて</h2>
-    <div class="section">
-        <h3>meca.jsとは</h3>
-        <p>meca.jsはマークアップエンジニアのコーディングを補助するためのjavascriptです。画像のロールオーバーやIE6の透過png対応などを実装しており、それぞれの機能を簡単にon/offできるので、使わない機能は無効にしてたりできます。その他にも、ターゲットになる要素のセレクタを設定でたりするのである程度柔軟に対応できます。（<a href="http://webtech-walker.com/archive/2009/03/22020147.html">→元エントリー</a>）</p>
-    </div>
-    <div class="section">
-        <h3>ダウンロード</h3>
-        <p><a href="meca.js">meca.js</a></p>
-        <p><a href="http://github.com/hokaccha/meca/blob/7fdb49f1b36dfe63ee8d7c2503d7107c5493a8bc/meca.js" rel="external">github</a>にもアップしてますのでそちらからもどうぞ。</p>
-    </div>
-    <div class="section" id="how_to_use">
-        <h3>使い方</h3>
-        <p class="description">jQueryとmeca.jsを読み込みます。meca.jsの一番上の方に設定を書いてあるところがありますので、そこを自分の好きな設定に書き換えて下さい。</p>
-        <pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.js&quot;&gt;&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;meca.js&quot;&gt;&lt;/script&gt;</code></pre>
 
-        <div class="section">
-            <h4>ページ毎に設定を変更する</h4>
-            <p>meca.js本体の設定で無効にしておいて、特定のページで有効にするには以下のようにします。上書きする設定はmeca.jsを読み込んだ後に書きます。</p>
-            <pre><code>[meca.js]
-$.Meca.heightAlign.config.enable = false;</code></pre>
-            
-            <pre><code>[html]
-&lt;script type=&quot;text/javascript&quot; src=&quot;jquery.js&quot;&gt;&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;meca.js&quot;&gt;&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot;&gt;
-$.Meca.heightAlign.config.enable   = true;
-$.Meca.heightAlign.config.selector = '#itemList li';
-&lt;/script&gt;</code></pre>
-        </div>
-    </div>
-    <div class="section">
-        <h3>実装されている機能</h3>
-        <ul>
-            <li><a href="#hover">画像ロールオーバー</a></li>
-            <li><a href="#external">外部リンク</a></li>
-            <li><a href="#pngfix">透過png</a></li>
-            <li><a href="#heightAlign">要素の高さ揃え</a></li>
-            <li><a href="#positionFixed">positon:fixed</a></li>
-        </ul>
-    </div>
+<div class="section">
+    <h2>実装されている機能</h3>
+    <ul>
+        <li><a href="#hover">画像ロールオーバー</a></li>
+        <li><a href="#external">外部リンク</a></li>
+        <li><a href="#pngfix">透過png</a></li>
+        <li><a href="#heightAlign">要素の高さ揃え</a></li>
+        <li><a href="#positionFixed">positon:fixed</a></li>
+        <li><a href="#active">active</a></li>
+        <li><a href="#smoothScroll">スムーズスクロール</a></li>
+        <li><a href="#addOsClass">OSのクラスをbodyに追加</a></li>
+        <li><a href="#labelClickable">IEで画像のlabelをクリック</a></li>
+    </ul>
+    </ul>
 </div>
 
 <div class="section" id="hover">
     <h2>画像ロールオーバー</h2>
-    <p class="description">指定したセレクタのマウスオーバー時のsrc属性を、指定した接尾語を付加したもの切り替えます。</p>
     <div class="section demo">
         <h3>デモ</h3>
-        <p>この場合デフォルトの設定ではsample_o.gifを用意します。</p>
         <img src="img/sample.gif" alt="sample" width="200" height="100" class="btn" />
-        <pre><code>&lt;img src=&quot;img/sample.gif&quot; alt=&quot;sample&quot; width=&quot;200&quot; height=&quot;100&quot; class=&quot;btn&quot; /&gt;</code></pre>
-    </div>
-    <div class="section config">
-        <h3>設定</h3>
-        <div class="section">
-            <h4>$.Meca.hover.config.enable</h4>
-            <dl>
-                <dt>default</dt>
-                <dd>true</dd>
-                <dt>type</dt>
-                <dd>Boolean</dd>
-                <dt>detail</dt>
-                <dd>ロールオーバーの有効/無効を切り替えます。trueで有効、falseで無効になりまます。</dd>
-            </dl>
-        </div>
-        <div class="section">
-            <h4>$.Meca.hover.config.selector</h4>
-            <dl>
-                <dt>default</dt>
-                <dd>.btn</dd>
-                <dt>type</dt>
-                <dd>String(CSS Selecter)</dd>
-                <dt>detail</dt>
-                <dd>ロールオーバーの対象となるセレクタを指定します。</dd>
-            </dl>
-        </div>
-        <div class="section">
-            <h4>$.Meca.hoverconfig.postfix</h4>
-            <dl>
-                <dt>default</dt>
-                <dd>_o</dd>
-                <dt>type</dt>
-                <dd>String</dd>
-                <dt>detail</dt>
-                <dd>ロールオーバー後の画像の接尾語を指定します。</dd>
-            </dl>
-        </div>
     </div>
     <p class="goPageTop"><a href="#top">ページの一番上へ</a></p>
 </div>
 
 <div class="section" id="external">
     <h2>外部リンク</h2>
-    <p class="description">指定されたセレクタにtarget=&quot;_blank&quot;を付加します。デフォルトはa[rel~=&quot;external&quot;]です。</p>
     <div class="section demo">
         <h3>デモ</h3>
         <p><a href="http://webtech-walker.com" rel="external">external link</a></p>
-        <pre><code>&lt;a href=&quot;http://webtech-walker.com&quot; rel=&quot;external&quot;&gt;external link&lt;/a&gt;</code></pre>
-    </div>
-    <div class="section config">
-        <h3>設定</h3>
-        <div class="section">
-            <h4>$.Meca.external.config.enable</h4>
-            <dl>
-                <dt>default</dt>
-                <dd>true</dd>
-                <dt>type</dt>
-                <dd>Boolean</dd>
-                <dt>detail</dt>
-                <dd>外部リンク付加の有効/無効を切り替えます。trueで有効、falseで無効になりまます。</dd>
-            </dl>
-        </div>
-        <div class="section">
-            <h4>$Meca.external.config.selector</h4>
-            <dl>
-                <dt>default</dt>
-                <dd>a[rel~=&quot;external&quot;]</dd>
-                <dt>type</dt>
-                <dd>String(CSS Selecter)</dd>
-                <dt>detail</dt>
-                <dd>外部リンク付加の対象となるセレクタを指定します。この設定はexternalRelがfalseのときのみ動作します。</dd>
-            </dl>
-        </div>
     </div>
     <p class="goPageTop"><a href="#top">ページの一番上へ</a></p>
 </div>
 
 <div class="section" id="pngfix">
     <h2>透過png</h2>
-    <p class="description">IE6で透過pngを使えるようにします。背景画像、img要素の両方で使えますが、背景画像のbackground-repeat、background-positionには対応していません。ただし、background-repeatにno-repeat以外だった場合、sizingMethodをscaleにするので、背景画像が伸びて表示されます。これは伸びても問題なく表示される画像の場合repeatするのと同じように表示することができます。また、img要素の場合はロールオーバーにも対応しています。</p>
-    <p class="description">img要素を透過pngに対応させる場合は透過gifを使用するか、span要素でimg要素をラップするかのいずれかが選べます（デフォルトではspanでラップになっています）。</p>
     <div class="section demo">
         <h3>デモ（img要素）</h3>
         <div class="bg"><img src="img/sample.png" alt="alpha png sample" class="pngfix" /></div>
-        <pre><code>&lt;img src=&quot;img/sample.png&quot; alt=&quot;alpha png sample&quot; class=&quot;pngfix&quot; /&gt;</code></pre>
     </div>
     <div class="section demo">
         <h3>デモ（ロールオーバー）</h3>
         <div class="bg"><img src="img/sample.png" alt="alpha png sample" class="pngfix btn" /></div>
-        <pre><code>&lt;img src=&quot;img/sample.png&quot; alt=&quot;alpha png sample&quot; class=&quot;pngfix btn&quot; /&gt;</code></pre>
     </div>
     <div class="section demo">
         <h3>デモ（背景要素 no-repeatの場合）</h3>
-        <p>CSSでno-repeatを指定していれば、no-repeatと同様の動作をします。ただしbackground-positionは常に「left top」になります。</p>
         <div class="bg">
             <div class="bgpng" id="pngfix_bg_norepeat">
                 <p>ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト</p>
@@ -163,30 +65,9 @@ $.Meca.heightAlign.config.selector = '#itemList li';
                 <p>ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト</p>
             </div>
         </div>
-        <pre><code>&lt;div class=&quot;bg&quot;&gt;
-    &lt;div class=&quot;bgpng&quot; id=&quot;pngfix_bg_norepeat&quot;&gt;
-        &lt;p&gt;ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト&lt;/p&gt;
-        &lt;p&gt;ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト&lt;/p&gt;
-        &lt;p&gt;ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト&lt;/p&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-
-div.bg {
-    background: url(sample_bg.jpg) no-repeat;
-    width: 500px;
-    height: 200px;
-    padding: 50px;
-}
-
-div#pngfix_bg_norepeat {
-    background: url(sample_bg.png) no-repeat;
-    padding: 10px 40px;
-    color: #FFF;
-}</code></pre>
     </div>
     <div class="section demo">
         <h3>デモ（背景要素 no-repeatでない場合）</h3>
-        <p>no-repeat以外の場合は、透過pngを指定しいる要素の幅、高さに合わせて画像の大きさが拡大/縮小します。今回サンプルに使っているような画像だと、垂直方向に拡大する分にはリピートするのと同じように表示されます。</p>
         <div class="bg">
             <div class="bgpng" id="pngfix_bg_repeat">
                 <p>ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト</p>
@@ -194,117 +75,12 @@ div#pngfix_bg_norepeat {
                 <p>ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト</p>
             </div>
         </div>
-
-<pre><code>&lt;div class=&quot;bg&quot;&gt;
-    &lt;div class=&quot;bgpng&quot; id=&quot;pngfix_bg_repeat&quot;&gt;
-        &lt;p&gt;ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト&lt;/p&gt;
-        &lt;p&gt;ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト&lt;/p&gt;
-        &lt;p&gt;ダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキストダミーテキスト&lt;/p&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-
-div.bg {
-    background: url(sample_bg.jpg) no-repeat;
-    width: 500px;
-    height: 200px;
-    padding: 50px;
-}
-
-div#pngfix_bg_repeat {
-    background: url(sample_bg.png) repeat-y;
-    padding: 10px 40px;
-    color: #FFF;
-    height: 180px;
-}</code></pre>
-
-
-    </div>
-    <div class="section config">
-        <h3>設定</h3>
-        <div class="section">
-            <h4>$Meca.pngfix.config.enable</h4>
-            <dl>
-                <dt>default</dt>
-                <dd>true</dd>
-                <dt>type</dt>
-                <dd>Boolean</dd>
-                <dt>detail</dt>
-                <dd>IE6の透過png対応の有効/無効を切り替えます。trueで有効、falseで無効になりまます。</dd>
-            </dl>
-        </div>
-        <div class="section">
-            <h4>$.Meca.pngfix.config.bgpngSelector</h4>
-            <dl>
-                <dt>default</dt>
-                <dd>.bgpng</dd>
-                <dt>type</dt>
-                <dd>String(CSS Selecter)</dd>
-                <dt>detail</dt>
-                <dd>背景画像に透過pngを使用するセレクタを指定します。</dd>
-            </dl>
-        </div>
-        <div class="section">
-            <h4>$.Meca.pngfix.config.imgpngSelector</h4>
-            <dl>
-                <dt>default</dt>
-                <dd>.pngfix</dd>
-                <dt>type</dt>
-                <dd>String(CSS Selecter)</dd>
-                <dt>detail</dt>
-                <dd>img要素に透過pngを使用するセレクタを指定します。</dd>
-            </dl>
-        </div>
-        <div class="section">
-            <h4>$.Meca.pngfix.config.imgpngHoverSelector</h4>
-            <dl>
-                <dt>default</dt>
-                <dd>.pngfix.btn</dd>
-                <dt>type</dt>
-                <dd>String(CSS Selecter)</dd>
-                <dt>detail</dt>
-                <dd>img要素に透過pngかつ、ロールオーバーするセレクタを指定します。</dd>
-            </dl>
-        </div>
-        <div class="section">
-            <h4>$.Meca.pngfix.config.postfix</h4>
-            <dl>
-                <dt>default</dt>
-                <dd>_o</dd>
-                <dt>type</dt>
-                <dd>String</dd>
-                <dt>detail</dt>
-                <dd>pngfixのロールオーバー後の画像の接尾語を指定します。</dd>
-            </dl>
-        </div>
-        <div class="section">
-            <h4>$.Meca.pngfix.config.blankGif</h4>
-            <dl>
-                <dt>default</dt>
-                <dd>false</dd>
-                <dt>type</dt>
-                <dd>false or image path</dd>
-                <dt>detail</dt>
-                <dd>透過pngの上にかぶせるための透過gifのパスを指定します。falseが指定されていた場合は、透過gifは使用せずにspan要素でimg要素をラップします。</dd>
-            </dl>
-        </div>
-        <div class="section">
-            <h4>$.Meca.pngfix.config.imgpngBlankGif</h4>
-            <dl>
-                <dt>default</dt>
-                <dd>$.Meca.pngfix.config.wrapSpanClass</dd>
-                <dt>type</dt>
-                <dd>imgpngWrapSpan</dd>
-                <dt>detail</dt>
-                <dd>透過gifを使わない設定のときにimg要素をラップするspanに付加するclass名を指定します。</dd>
-            </dl>
-        </div>
     </div>
     <p class="goPageTop"><a href="#top">ページの一番上へ</a></p>
 </div>
 
 <div class="section" id="heightAlign">
     <h2>要素の高さ揃え</h2>
-    <p class="description">指定したセレクタの要素の高さを一番高いものに揃えます。対象の親セレクタと子セレクタをそれぞれ指定します。デフォルトのセレクタは親セレクタが「.heightAlign」で子セレクタが「&gt; *」です。この指定ではheightAlignクラスが指定されている要素の直接の子要素の高さを揃えるという動作をします。</p>
     <div class="section demo">
         <h3>デモ</h3>
         <ul class="heightAlign" id="heightAlignRed">
@@ -322,96 +98,58 @@ div#pngfix_bg_repeat {
             <li>ダミーダミー</li>
             <li>ダミーダミーダミーダミーダミーダミー</li>
         </ul>
-
-<pre><code>&lt;ul class=&quot;heightAlign&quot; id=&quot;heightAlignRed&quot;&gt;
-    &lt;li&gt;だみーだみーだみーだみー&lt;/li&gt;
-    &lt;li&gt;だみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみー&lt;/li&gt;
-    &lt;li&gt;だみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみー&lt;/li&gt;
-    &lt;li&gt;だみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみー&lt;/li&gt;
-    &lt;li&gt;だみーだみーだみーだみーだみーだみーだみーだみーだみーだみー&lt;/li&gt;
-    &lt;li&gt;だみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみー&lt;/li&gt;
-    &lt;li&gt;だみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみーだみー&lt;/li&gt;
-    &lt;li&gt;だみー&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;ul class=&quot;heightAlign&quot; id=&quot;heightAlignBlue&quot;&gt;
-    &lt;li&gt;ダミーダミー&lt;/li&gt;
-    &lt;li&gt;ダミーダミーダミーダミーダミーダミー&lt;/li&gt;
-&lt;ul&gt;
-
-ul.heightAlign li {
-    padding: 0;
-    margin: 5px;
-    width: 200px;
-    float: left;
-}
-
-ul#heightAlignRed li {
-    border: 1px solid #C00;
-}
-
-ul#heightAlignBlue li {
-    border: 1px solid #00C;
-}</code></pre>
-    </div>
-    <div class="section config">
-        <h3>設定</h3>
-        <div class="section">
-            <h4>$.Meca.heightAlign.config.enable</h4>
-            <dl>
-                <dt>default</dt>
-                <dd>true</dd>
-                <dt>type</dt>
-                <dd>Boolean</dd>
-                <dt>detail</dt>
-                <dd>高さ揃えの有効/無効を切り替えます。trueで有効、falseで無効になりまます。</dd>
-            </dl>
-        </div>
-        <div class="section">
-            <h4>$Meca.heightAlign.config.selectorParent</h4>
-            <dl>
-                <dt>default</dt>
-                <dd>.heightAlign</dd>
-                <dt>type</dt>
-                <dd>String(CSS Selecter)</dd>
-                <dt>detail</dt>
-                <dd>高さ揃えの対象となるセレクタの親要素を指定します。</dd>
-            </dl>
-        </div>
-        <div class="section">
-            <h4>$.Meca.heightAlign.config.selectorChild</h4>
-            <dl>
-                <dt>default</dt>
-                <dd>&gt; *</dd>
-                <dt>type</dt>
-                <dd>String(CSS Selecter)</dd>
-                <dt>detail</dt>
-                <dd>高さ揃えの対象となるセレクタの子要素を指定します。</dd>
-            </dl>
-        </div>
     </div>
     <p class="goPageTop"><a href="#top">ページの一番上へ</a></p>
 </div>
 
 <div class="section" id="positionFixed">
     <h2>position:fixed</h2>
-    <p class="description">IE6のposition:fixedを実現する。position:fixedが指定されている要素を自動的にIE6にも対応させます。特に設定等は指定する必要はありません。topとleftのみ対応でrightとbottom対応はtodoです。</p>
     <div class="section demo">
         <h3>デモ</h3>
         <p><a href="fixed.html">デモページ</a></p>
     </div>
-    <div class="section config">
-        <h3>設定</h3>
-        <div class="section">
-            <h4>$.Meca.positionFixed.config.enable</h4>
-            <dl>
-                <dt>default</dt>
-                <dd>true</dd>
-                <dt>type</dt>
-                <dd>Boolean</dd>
-                <dt>detail</dt>
-                <dd>position:fixedの有効/無効を切り替えます。trueで有効、falseで無効になりまます。</dd>
-            </dl>
+    <p class="goPageTop"><a href="#top">ページの一番上へ</a></p>
+</div>
+
+<div class="section" id="active">
+    <h2>active</h2>
+    <div class="section demo">
+        <h3>デモ</h3>
+        <p><img src="img/sample.gif" class="hasActive" alt="test" /></p>
+        <p><img src="img/sample.gif" class="hasActive btn" alt="test" /></p>
+    </div>
+    <p class="goPageTop"><a href="#top">ページの一番上へ</a></p>
+</div>
+
+<div class="section" id="smoothScroll">
+    <h2>スムーズスクロール</h2>
+    <p class="goPageTop"><a href="#top">ページの一番上へ</a></p>
+</div>
+
+<div class="section" id="addOsClass">
+    <h2>OSによってbodyにclassをふる</h2>
+    <p class="goPageTop"><a href="#top">ページの一番上へ</a></p>
+</div>
+
+<div class="section" id="labelClickable">
+    <h2>IEで画像のlabelをクリックできる</h2>
+    <div class="section demo">
+        <h3>デモ</h3>
+        <div>
+        <label for="label1"><img src="img/sample_btn.gif" alt="sample" /></label>
+        <input type="text" id="label1" />
+        </div>
+
+        <div>
+        <label for="label2"><img src="img/sample_btn.gif" alt="sample" /></label>
+        <input type="radio" id="label2" value="1" name="1" />
+        <label for="label3"><img src="img/sample_btn.gif" alt="sample" /></label>
+        <input type="radio" id="label3" value="2" name="1" />
+        </div>
+
+        <div>
+        <label for="label4"><img src="img/sample_btn.gif" alt="sample" /></label>
+        <input type="checkbox" id="label4" value="1" name="1" />
         </div>
     </div>
     <p class="goPageTop"><a href="#top">ページの一番上へ</a></p>
@@ -419,6 +157,20 @@ ul#heightAlignBlue li {
 
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="../meca.js"></script>
+<script type="text/javascript">
+$(function() {
+    $('.btn').meca('hover');
+    $('a[rel~="external"]').meca('external');
+    $('.pngfix').meca('pngfix');
+    $('.bgpng').meca('bgpngfix');
+    $('.heightAlign').meca('heightAlign');
+    $('a[href^="#"]').meca('smoothScroll', { deleteHashSelector: 'p.goPageTop a' });
+    $('.hasActive').meca('active');
+
+    $.meca.func.addOsClass();
+    $.meca.func.labelClickable();
+});
+</script>
 </div>
 
 <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">

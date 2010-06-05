@@ -329,3 +329,7 @@ ul#heightAlignRed li {
 ul#heightAlignBlue li {
     border: 1px solid #00C;
 }
+
+div#labelClickable div.demo div {
+    margin: 20px;
+}
