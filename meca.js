@@ -77,7 +77,7 @@ $.meca.func = {
             }
             else {
                 var wrapSpan = $('<span/>').addClass(conf.wrapSpanClass).css(css);
-                $elem.css('display', 'none').wrap(wrapSpan);
+                $elem.css('visibility', 'hidden').wrap(wrapSpan);
                 return $elem.parent();
             }
         };
