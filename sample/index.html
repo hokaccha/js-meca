@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>meca.js</title>
     <link rel="stylesheet" href="css/style.css" />
+    <!--[if lte IE 8]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 </head>
-<body>
+<body id="pagetop">
 <h1>meca.js</h1>
 <nav id="menu">
     <ul>
@@ -27,46 +28,94 @@
     </section>
     <section id="hover" class="content">
         <h2>画像のロールオーバー</h2>
+        <p><img src="img/sample.gif" alt="sample" class="btn" /></p>
     </section>
     <section id="active" class="content">
         <h2>画像のaction</h2>
+        <p><img src="img/sample.gif" alt="sample" class="hasActive" /></p>
+        <p><img src="img/sample.gif" alt="sample" class="hasActive btn" /></p>
     </section>
     <section id="external" class="content">
         <h2>別ウィンドウで開く</h2>
+        <p><a href="http://webtech-walker.com/" class="external">外部リンク</a></p>
     </section>
     <section id="pngfix" class="content">
         <h2>IE6で透過png</h2>
+        <div class="bg"><img src="img/sample.png" alt="sample" class="pngfix" /></div>
+        <div class="bg"><img src="img/sample.png" alt="sample" class="pngfix btn"/></div>
+        <div class="bg"><p class="bgpng">bgpng</p></div>
     </section>
     <section id="heightAlign" class="content">
         <h2>要素の高さ揃え</h2>
     </section>
     <section id="positionFixed" class="content">
         <h2>IE6でpositonFixed</h2>
+        <p class="fixed">IE6だとfixed</p>
     </section>
     <section id="smoothScroll" class="content">
         <h2>スムーズスクロール</h2>
+        <p>メニュー参照</p>
     </section>
     <section id="addOsClass" class="content">
         <h2>OS判別クラスの付加</h2>
+        <p>mac is blue, windows is red</p>
     </section>
     <section id="labelClickable" class="content">
         <h2>IEでlabelの画像をクリックできるようにする</h2>
+
+        <div>
+        <label for="label1"><img src="img/sample_btn.gif" alt="sample" /></label>
+        <input type="text" id="label1" />
+        </div>
+
+        <div>
+        <label for="label2"><img src="img/sample_btn.gif" alt="sample" /></label>
+        <input type="radio" id="label2" value="1" name="1" />
+        <label for="label3"><img src="img/sample_btn.gif" alt="sample" /></label>
+        <input type="radio" id="label3" value="2" name="1" />
+        </div>
+
+        <div>
+        <label for="label4"><img src="img/sample_btn.gif" alt="sample" /></label>
+        <input type="checkbox" id="label4" value="1" name="1" />
+        </div>
+        
     </section>
-    <p><a href="#">hoge</a></p>
-    <p><a href="#hoge">hoge</a></p>
 </div>
 
-<script src="js/html5.js"></script>
 <script src="js/jquery.js"></script>
 <script src="../meca.js"></script>
 <script src="js/page_state.js"></script>
 <script>
-    // smoothScroll
-    $('a[href]^=#').filter(function() {
-        return $(this).attr('href') != '#';
-    }).meca('smoothScroll');
+// ロールオーバー
+$('.btn').meca('hover');
 
-    $('body').meca('addOsClass');
+// 外部リンク
+$('a.external').meca('external');
+
+// pngfix
+$('.pngfix').meca('pngfix');
+
+// pngfix（背景画像）
+$('.bgpng').meca('bgpngfix');
+
+// 高さ揃え
+$('.heightAlign').meca('heightAlign');
+
+// IE6でposition fixed
+$('.fixed').meca('positionFixed');
+
+// スムーズスクロール
+$('a[href^="#"]').meca('smoothScroll');
+
+// OSのクラス追加
+$('body').meca('addOsClass');
+
+// IEで画像のlabel押せるようにする
+$('label img').meca('labelClickable');
+
+// active
+$('.hasActive').meca('active');
 </script>
 </body>
 </html>

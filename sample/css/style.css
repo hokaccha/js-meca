@@ -1,5 +1,7 @@
 @charset "utf-8";
 
+* { /zoom: 1 }
+
 section, nav {
     display: block;
 }
@@ -10,7 +12,12 @@ ul,li {
 }
 
 section.content {
-    display: none;
+    margin-bottom: 40px;
+    /* display: none; */
+}
+
+section.content h2 {
+    border-bottom: 3px solid #999;
 }
 
 nav#menu {
@@ -40,4 +47,32 @@ nav#menu li a {
 
 nav#menu li a:hover {
     background: #C00;
+}
+
+section#pngfix div.bg {
+    background: url('../img/sample_bg.jpg') no-repeat;
+    margin: 10px 0;
+    width: 320px;
+    padding: 20px;
+}
+
+section#pngfix p.bgpng {
+    background: url('../img/sample.png') no-repeat;
+    height: 100px;
+}
+
+section#positionFixed p.fixed {
+    width: 100px;
+    height: 20px;
+    left: 10px;
+    top: 10px;
+    border: 1px solid #F00;
+}
+
+body.osWin section#addOsClass p {
+    background: red;
+}
+
+body.osMac section#addOsClass p {
+    background: blue;
 }
