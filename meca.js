@@ -351,12 +351,20 @@
     $.Meca.smoothScroll.exec = function() {
         if (!$.Meca.smoothScroll.config.enable) return;
 
-        $('a[href^="#"]').click(function() {
+        $('a[href^="#"]').filter(function() {
+            return $(this).attr('href') != '#';
+        }).click(function() {
             var $elem = $(this);
             
             // ターゲット要素がなかったら何もしない
-            var $target = $($elem.attr('href'));
-            if (!$target.length) return;
+            var target_id = $elem.attr('href');
+            try {
+                var $target = $(target_id);
+                if (!$target.length) return;
+            }
+            catch(e) {
+                return;
+            }
 
             // スムーズスクロールにする
             $('html, body').animate({
