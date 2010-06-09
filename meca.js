@@ -160,14 +160,15 @@ var funcs = {
             noAddHashList: ['#top']
         }, conf);
 
+        var noAddHashList = conf.noAddHashList || [];
+
         $(this).click(function() {
             var $elem = $(this);
 
-            console.log('hoge');
             var target_id = $elem.attr('href');
             try {
                 var $target = $(target_id);
-                if (!$target.length) throw 'no such id';
+                if (!$target.length) return;
             }
             catch(e) {
                 return;
@@ -178,10 +179,7 @@ var funcs = {
                 'normal',
                 'swing',
                 function() {
-                    if (conf.noAddHashList && conf.noAddHashList.indexOf(location.hash) != -1) {
-                        if (location.hash) location.hash = '';
-                    }
-                    else {
+                    if (noAddHashList.indexOf(target_id) == -1) {
                         location.hash = target_id;
                     }
                 }
