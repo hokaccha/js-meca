@@ -12,24 +12,22 @@
  *
  */
 
+(function() {
+
+var is_msie6 = ($.browser.msie && $.browser.version < 7);
+
+var filterStyle = function(src, sizing) {
+    var dx = 'DXImageTransform.Microsoft.AlphaImageLoader';
+    return 'progid:' + dx + '(src="' + src + '",sizingMethod=' + sizing +')';
+};
+
 $.fn.meca = function(action, conf) {
     return this.each(function() {
-        $.meca.func[action].call(this, conf);
+        funcs[action].call(this, conf);
     });
 };
 
-$.meca = {};
-
-$.meca.util = {
-    is_msie6: ($.browser.msie && $.browser.version < 7),
-
-    filterStyle: function(src, sizing) {
-        var dx = 'DXImageTransform.Microsoft.AlphaImageLoader';
-        return 'progid:' + dx + '(src="' + src + '",sizingMethod=' + sizing +')';
-    }
-};
-
-$.meca.func = {
+var funcs = {
     hover: function(conf) {
         var $elem = $(this);
         var conf  = $.extend({ postfix:  '_o' }, conf);
@@ -159,25 +157,32 @@ $.meca.func = {
 
     smoothScroll: function(conf) {
         var conf = $.extend({
-            deleteHashSelector: ''
+            noAddHashList: ['#top']
         }, conf);
 
         $(this).click(function() {
             var $elem = $(this);
-            
-            var $target = $($elem.attr('href'));
-            if (!$target.length) return;
+
+            console.log('hoge');
+            var target_id = $elem.attr('href');
+            try {
+                var $target = $(target_id);
+                if (!$target.length) throw 'no such id';
+            }
+            catch(e) {
+                return;
+            }
 
             $('html, body').animate(
                 { scrollTop: $target.offset().top },
                 'normal',
                 'swing',
                 function() {
-                    if (conf.deleteHashSelector && $elem.is(conf.deleteHashSelector)) {
+                    if (conf.noAddHashList && conf.noAddHashList.indexOf(location.hash) != -1) {
                         if (location.hash) location.hash = '';
                     }
                     else {
-                        location.hash = $elem.attr('href');
+                        location.hash = target_id;
                     }
                 }
             );
@@ -186,6 +191,7 @@ $.meca.func = {
     },
 
     addOsClass: function(conf) {
+        var $elem = $(this);
         var conf = $.extend({
             winClass: 'osWin',
             macClass: 'osMac'
@@ -193,17 +199,19 @@ $.meca.func = {
 
         var ua = navigator.userAgent.toLowerCase();
         if (/windows/.test(ua)) {
-            $('body').addClass(conf.winClass);
+            $elem.addClass(conf.winClass);
         }
         else if (/mac os x/.test(ua)) {
-            $('body').addClass(conf.macClass);
+            $elem.addClass(conf.macClass);
         }
     },
 
     labelClickable: function() {
         if(!$.browser.msie) return;
 
-        $('label img').click(function(){
+        var $elem = $(this);
+
+        $elem.click(function(){
             $('#' + $(this).parents('label').attr('for')).focus().click();
         });
     },
@@ -232,3 +240,5 @@ $.meca.func = {
         $elem.mouseup(function() { this.src = src_base });
     }
 };
+
+})();
