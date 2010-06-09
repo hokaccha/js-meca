@@ -14,17 +14,17 @@
 
 (function() {
 
+$.fn.meca = function(action, conf) {
+    return this.each(function() {
+        funcs[action].call(this, conf);
+    });
+};
+
 var is_msie6 = ($.browser.msie && $.browser.version < 7);
 
 var filterStyle = function(src, sizing) {
     var dx = 'DXImageTransform.Microsoft.AlphaImageLoader';
     return 'progid:' + dx + '(src="' + src + '",sizingMethod=' + sizing +')';
-};
-
-$.fn.meca = function(action, conf) {
-    return this.each(function() {
-        funcs[action].call(this, conf);
-    });
 };
 
 var funcs = {
@@ -50,8 +50,7 @@ var funcs = {
     },
 
     pngfix: function(conf) {
-        var self = $.meca;
-        if (!self.util.is_msie6) return;
+        if (!is_msie6) return;
 
         var $elem = $(this);
         var conf  = $.extend({
@@ -62,7 +61,7 @@ var funcs = {
         }, conf);
 
         var css = {
-            'filter': self.util.filterStyle($elem.attr('src'), 'crop'),
+            'filter': filterStyle($elem.attr('src'), 'crop'),
             'width':  $elem.width(),
             'height': $elem.height(),
             'zoom':   '1'
@@ -87,8 +86,8 @@ var funcs = {
             img.src = src_o;
 
             apply($elem).hover(
-                function() { $(this).css('filter', self.util.filterStyle(src_o, 'proc')) },
-                function() { $(this).css('filter', self.util.filterStyle(src, 'proc')) }
+                function() { $(this).css('filter', filterStyle(src_o, 'proc')) },
+                function() { $(this).css('filter', filterStyle(src, 'proc')) }
             );
         }
         else {
@@ -97,12 +96,11 @@ var funcs = {
     },
 
     bgpngfix: function() {
-        var self  = $.meca;
-        if (!self.util.is_msie6) return;
+        if (!is_msie6) return;
 
         var $elem = $(this);
 
-        var filter = self.util.filterStyle(
+        var filter = filterStyle(
             $elem.css('backgroundImage').slice(5,-2),
             ($elem.css('backgroundRepeat') === 'no-repeat') ? 'crop' : 'scale'
         );
@@ -125,8 +123,7 @@ var funcs = {
     },
 
     positionFixed: function() {
-        var self = $.meca;
-        if (!self.util.is_msie6) return;
+        if (!is_msie6) return;
 
         var elem = this;
         var $elem = $(elem);
@@ -179,7 +176,7 @@ var funcs = {
                 'normal',
                 'swing',
                 function() {
-                    if (noAddHashList.indexOf(target_id) == -1) {
+                    if ($.inArray(target_id, noAddHashList) == -1) {
                         location.hash = target_id;
                     }
                 }
