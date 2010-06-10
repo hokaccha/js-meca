@@ -112,9 +112,10 @@ var funcs = {
         });
     },
 
-    heightAlign: function() {
+    heightAlign: function(conf) {
+        var conf = $.extend({ childSelector: '> *' }, conf);
         var maxHeight = 0;
-        $(this).find('> *').each(function() {
+        $(this).find(conf.childSelector).each(function() {
             var height = $(this).height();
             if (maxHeight < height) {
                 maxHeight = height;
