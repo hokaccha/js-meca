@@ -6,7 +6,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  *
  * @author   Kazuhito Hokamura (http://webtech-walker.com/)
- * @version  2.0.0
+ * @version  2.0.1
  * @url      http://webtech-walker.com/meca/
  * @github   http://github.com/hokaccha/meca/tree/master
  *
@@ -112,10 +112,9 @@ var funcs = {
         });
     },
 
-    heightAlign: function(conf) {
-        var conf = $.extend({ childSelector: '> *' }, conf);
+    heightAlign: function() {
         var maxHeight = 0;
-        $(this).find(conf.childSelector).each(function() {
+        $(this).find('> *').each(function() {
             var height = $(this).height();
             if (maxHeight < height) {
                 maxHeight = height;
