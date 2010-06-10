@@ -11,6 +11,10 @@ ul,li {
     padding: 0;
 }
 
+ul {
+    list-style: none;
+}
+
 section.content {
     margin-bottom: 40px;
     /* display: none; */
@@ -75,4 +79,28 @@ body.osWin section#addOsClass p {
 
 body.osMac section#addOsClass p {
     background: blue;
+}
+
+ul.heightAlign:after {
+    content: ".";
+    visibility: hidden;
+    height: 0;
+    display: block;
+    clear: both;
+    line-height: 0;
+}
+
+ul.heightAlign li {
+    padding: 0;
+    margin: 5px;
+    width: 200px;
+    float: left;
+}
+
+ul#heightAlignRed li {
+    border: 1px solid #C00;
+}
+
+ul#heightAlignBlue li {
+    border: 1px solid #00C;
 }
