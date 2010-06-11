@@ -54,7 +54,7 @@ nav#menu li a:hover {
 }
 
 section#pngfix div.bg {
-    background: url('../img/sample_bg.jpg') no-repeat;
+    background: url('../img/sample_bg.png');
     margin: 10px 0;
     width: 320px;
     padding: 20px;
