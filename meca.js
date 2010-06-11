@@ -204,9 +204,7 @@ var funcs = {
     labelClickable: function() {
         if(!$.browser.msie) return;
 
-        var $elem = $(this);
-
-        $elem.click(function(){
+        $(this).click(function() {
             $('#' + $(this).parents('label').attr('for')).focus().click();
         });
     },
@@ -228,11 +226,11 @@ var funcs = {
             src_base = src.replace(/\.\w+$/, conf.hoverPostfix + '$&');
         }
 
-        var img   = new Image();
-        img.src   = src_a;
+        var img = new Image();
+        img.src = src_a;
 
         $elem.mousedown(function() { this.src = src_a; });
-        $elem.mouseup(function() { this.src = src_base });
+        $elem.mouseup(function()   { this.src = src_base });
     },
 
     placeholder: function(conf) {
