@@ -1,362 +1,167 @@
 /*
- * meca.js 1.1.15 markup engineer's coding adminicle javascript library
+ * meca.js - markup engineer's coding adminicle javascript library
  *
  * Copyright (c) 2009 Kazuhito Hokamura
  * Licensed under the MIT License:
  * http://www.opensource.org/licenses/mit-license.php
  *
  * @author   Kazuhito Hokamura (http://webtech-walker.com/)
- * @version  1.1.15
+ * @version  2.1.0
  * @url      http://webtech-walker.com/meca/
  * @github   http://github.com/hokaccha/meca/tree/master
  *
  */
 
-(function($) {
-    $.Meca = {};
+(function() {
 
-    /*
-     * config setting
-     -----------------------------------*/
+$.fn.meca = function(action, conf) {
+    return this.each(function() {
+        funcs[action].call(this, conf);
+    });
+};
 
-    /**
-     * image hover config setting
-     */ 
+var is_msie6 = ($.browser.msie && $.browser.version < 7);
 
-    $.Meca.hover = {};
-    $.Meca.hover.config = {};
+var filterStyle = function(src, sizing) {
+    var dx = 'DXImageTransform.Microsoft.AlphaImageLoader';
+    return 'progid:' + dx + '(src="' + src + '",sizingMethod=' + sizing +')';
+};
 
-    $.Meca.hover.config.enable   = true;
-    $.Meca.hover.config.selector = '.btn';
-    $.Meca.hover.config.postfix  = '_o';
+var funcs = {
+    hover: function(conf) {
+        var $elem = $(this);
+        var conf  = $.extend({ postfix:  '_o' }, conf);
 
+        var src  = $elem.attr('src');
+        if (!src) return;
 
-    /**
-     * external link config setting
-     */
+        var src_o = src.replace(/\.\w+$/, conf.postfix + '$&');
+        var img   = new Image();
+        img.src   = src_o;
 
-    $.Meca.external = {};
-    $.Meca.external.config = {};
+        $elem.hover(
+            function() { this.src = src_o; },
+            function() { this.src = src; }
+        );
+    },
 
-    $.Meca.external.config.enable   = true;
-    $.Meca.external.config.selector = 'a[rel~="external"]';
+    external: function() {
+        $(this).attr('target', '_blank');
+    },
 
-        
-    /**
-     * pngfix config setting
-     */
+    pngfix: function(conf) {
+        if (!is_msie6) return;
 
-    $.Meca.pngfix = {};
-    $.Meca.pngfix.config = {};
+        var $elem = $(this);
+        var conf  = $.extend({
+            hoverSelector: '.btn',
+            hoverPostfix:  '_o',
+            blankGif:      false,
+            wrapSpanClass: 'imgpngWrapSpan'
+        }, conf);
 
-    $.Meca.pngfix.config.enable              = true;
-    $.Meca.pngfix.config.bgpngSelector       = '.bgpng';
-    $.Meca.pngfix.config.imgpngSelector      = '.pngfix';
-    $.Meca.pngfix.config.imgpngHoverSelector = '.pngfix.btn';
-    $.Meca.pngfix.config.postfix             = '_o';
-    $.Meca.pngfix.config.blankGif            = false;
-    $.Meca.pngfix.config.wrapSpanClass       = 'imgpngWrapSpan';
+        var css = {
+            'filter': filterStyle($elem.attr('src'), 'crop'),
+            'width':  $elem.width(),
+            'height': $elem.height(),
+            'zoom':   '1'
+        };
 
+        var apply = function($elem) {
+            if (conf.blankGif) {
+                $elem.css(css).attr('src', conf.blankGif);
+                return $elem;
+            }
+            else {
+                var wrapSpan = $('<span/>').addClass(conf.wrapSpanClass).css(css);
+                $elem.css('visibility', 'hidden').wrap(wrapSpan);
+                return $elem.parent();
+            }
+        };
 
-    /**
-     * heightAlign config setting
-     */
+        if ( $elem.is(conf.hoverSelector) ) {
+            var src = $elem.attr('src');
+            var src_o = src.replace(/\.\w+$/, conf.hoverPostfix + '$&');
+            var img = new Image();
+            img.src = src_o;
 
-    $.Meca.heightAlign = {};
-    $.Meca.heightAlign.config = {};
-
-    $.Meca.heightAlign.config.enable         = true;
-    $.Meca.heightAlign.config.selectorParent = '.heightAlign';
-    $.Meca.heightAlign.config.selectorChild  = '> *';
-
-    /**
-     * position fiexd config setting
-     */
-
-    $.Meca.positionFixed = {};
-    $.Meca.positionFixed.config = {};
-
-    $.Meca.positionFixed.config.enable = true;
-
-    /**
-     * word break config setting
-     */
-
-    $.Meca.wordBreak = {};
-    $.Meca.wordBreak.config = {};
-
-    $.Meca.wordBreak.config.enable = false;
-    $.Meca.wordBreak.config.selector = '.wordBreak';
-
-    /**
-     * smooth scroll config setting
-     */
-
-    $.Meca.smoothScroll = {};
-    $.Meca.smoothScroll.config = {};
-
-    $.Meca.smoothScroll.config.enable   = true;
-    $.Meca.smoothScroll.config.duration = 'normal';
-    $.Meca.smoothScroll.config.easing   = 'swing';
-    $.Meca.smoothScroll.config.excludeHashSelector = 'p.goPageTop a';
-
-    /**
-     * add os class config setting
-     */
-    
-    $.Meca.addOsClass = {};
-    $.Meca.addOsClass.config = {};
-
-    $.Meca.addOsClass.config.enable = true;
-    $.Meca.addOsClass.config.winClass = 'osWin';
-    $.Meca.addOsClass.config.macClass = 'osMac';
-
-    /**
-     * label click able class config setting
-     */
-
-    $.Meca.labelClickable = {};
-    $.Meca.labelClickable.config = {};
-    
-    $.Meca.labelClickable.config.enable = false;
-
-
-    /**
-     * image hover config setting
-     */ 
-
-    $.Meca.active = {};
-    $.Meca.active.config = {};
-
-    $.Meca.active.config.enable   = true;
-    $.Meca.active.config.selector = '.hasActive';
-    $.Meca.active.config.postfix  = '_a';
-
-
-    /*
-     * exec modules
-     -----------------------------------*/
-
-    /**
-     * hover image
-     */
-    $.Meca.hover.exec = function() {
-        if (!$.Meca.hover.config.enable) return;
-        $($.Meca.hover.config.selector).each(function() {
-            if (!$(this).attr('src')) return;
-            var src   = this.src;
-            var src_o = this.src.replace(/\.\w+$/, $.Meca.hover.config.postfix + '$&');
-            var img   = new Image();
-            img.src   = src_o;
-            $(this).hover(
-                function() { this.src = src_o; },
-                function() { this.src = src; }
+            apply($elem).hover(
+                function() { $(this).css('filter', filterStyle(src_o, 'proc')) },
+                function() { $(this).css('filter', filterStyle(src, 'proc')) }
             );
-        });
-    };
-
-
-    /**
-     * external link
-     */
-    $.Meca.external.exec = function() {
-        if (!$.Meca.external.config.enable) return;
-        $($.Meca.external.config.selector).attr('target', '_blank');
-    };
-
-
-    /**
-     * alpha png image for IE6
-     */
-    $.Meca.pngfix.exec = function() {
-        if (!$.Meca.pngfix.config.enable) return;
-        if (!($.browser.msie && $.browser.version == "6.0")) return;
-
-        var getFilterStyle = function(src, sizing) {
-            var dx = 'DXImageTransform.Microsoft.AlphaImageLoader';
-            return 'progid:' + dx + '(src="' + src + '",sizingMethod=' + sizing +')';
-        };
-
-        var getImgpngStyle = function(elem) {
-            return {
-                'filter': getFilterStyle(elem.attr('src'), 'crop'),
-                'width':  elem.width(),
-                'height': elem.height(),
-                'zoom':   '1'
-            };
-        };
-
-        // background png to alpha png
-        $($.Meca.pngfix.config.bgpngSelector).each(function() {
-            var bgpngSrc    = $(this).css('backgroundImage').slice(5,-2);
-            var bgpngSizing = ($(this).css('backgroundRepeat') === 'no-repeat') ? 'crop' : 'scale';
-            var bgpngStyle  = {
-                'filter': getFilterStyle(bgpngSrc, bgpngSizing),
-                'background-image': 'none',
-                'zoom': '1'
-            };
-            $(this).css(bgpngStyle);
-        });
-
-        // with hover
-        $($.Meca.pngfix.config.imgpngHoverSelector).each(function() {
-            var $self = $(this);
-            var src = $self.attr('src');
-            var src_o = src.replace(/\.\w+$/, $.Meca.pngfix.config.postfix + '$&');
-            var img   = new Image();
-            img.src   = src_o;
-
-            if ($.Meca.pngfix.config.blankGif) {
-                $self.css(getImgpngStyle($self))
-                     .attr('src', $.Meca.pngfix.config.blankGif);
-
-                $(this).hover(
-                    function() { $self.css('filter', getFilterStyle(src_o, 'proc')) },
-                    function() { $self.css('filter', getFilterStyle(src, 'proc')) }
-                );
-            }
-            else {
-                var wrapSpan = $(document.createElement('span'))
-                    .addClass($.Meca.pngfix.config.wrapSpanClass)
-                    .css(getImgpngStyle($self));
-                $self
-                    .css('visibility', 'hidden').wrap(wrapSpan).parent()
-                    .hover(
-                        function() { $(this).css('filter', getFilterStyle(src_o, 'proc')) },
-                        function() { $(this).css('filter', getFilterStyle(src, 'proc')) }
-                    )
-                ;
-            }
-
-            $.data(this, 'pngfixed', 'fixed');
-        });
-
-        // img element png to alpha png
-        $($.Meca.pngfix.config.imgpngSelector).each(function() {
-            if ($.data(this, 'pngfixed') == 'fixed') return;
-            if ($.Meca.pngfix.config.blankGif) {
-                $(this).css(getImgpngStyle($(this)))
-                       .attr('src', $.Meca.pngfix.config.blankGif);
-            }
-            else {
-                var wrapSpan = $(document.createElement('span'))
-                    .addClass($.Meca.pngfix.config.wrapSpanClass)
-                    .css(getImgpngStyle($(this)));
-                $(this).css('visibility', 'hidden').wrap(wrapSpan);
-            }
-        });
-    };
-
-    /**
-     * heightAlign adujst
-     */
-    $.Meca.heightAlign.exec = function() {
-        if (!$.Meca.heightAlign.config.enable) return;
-        var heightAlignExec = function() {
-            $($.Meca.heightAlign.config.selectorParent).each(function() {
-                var maxHeight = 0;
-                $(this).find($.Meca.heightAlign.config.selectorChild).each(function() {
-                    var height = $(this).height();
-                    if (maxHeight < height) {
-                        maxHeight = height;
-                    }
-                }).height(maxHeight);
-            });
-        };
-        if ($.browser.opera == true) {
-            heightAlignExec();
         }
         else {
-            $(window).load(heightAlignExec);
+            apply($elem);
         }
-    };
+    },
 
-    /**
-     * posotion fixed for ie6
-     */
-    $.Meca.positionFixed.exec = function() {
-        if (!$.Meca.positionFixed.config.enable) return;
-        if (!($.browser.msie && $.browser.version == "6.0")) return;
+    bgpngfix: function() {
+        if (!is_msie6) return;
 
-        var elems = document.all;
-        for (var i = 0, len = elems.length; i < len; i++) {
-            var elem = elems[i];
-            if (elem.currentStyle.position == 'fixed') {
-                $.Meca.util.fixed(elem);
-            }
-        }
-    };
+        var $elem = $(this);
 
-    /**
-     * word break
-     */
-    $.Meca.wordBreak.exec = function() {
-        if (!$.Meca.wordBreak.config.enable) return;
-        $($.Meca.wordBreak.config.selector).each(function() {
-            if($.browser.msie) {
-                $(this).css('word-break', 'break-all');
-            }
-            else {
-                $.Meca.util.splitText($(this));
-            }
+        var filter = filterStyle(
+            $elem.css('backgroundImage').slice(5,-2),
+            ($elem.css('backgroundRepeat') === 'no-repeat') ? 'crop' : 'scale'
+        );
+
+        $elem.css({
+            'filter': filter,
+            'background-image': 'none',
+            'zoom': '1'
         });
-    };
+    },
 
+    heightAlign: function() {
+        var maxHeight = 0;
+        $(this).find('> *').each(function() {
+            var height = $(this).height();
+            if (maxHeight < height) {
+                maxHeight = height;
+            }
+        }).height(maxHeight);
+    },
 
-    $.Meca.util = {
-        splitText: function(elem) {
-            var span;
-            var splited;
-            var splitter = (navigator.userAgent.indexOf('Firefox/2') != -1) ? '<wbr />' : String.fromCharCode(8203);
-            elem.contents().each(function() {
-                if (this.nodeType == 1) {
-                    $.Meca.util.splitText($(this));
+    positionFixed: function() {
+        if (!is_msie6) return;
+
+        var elem = this;
+        var $elem = $(elem);
+
+        var baseTop  = parseInt($elem.css('top'))  || 0;
+        var baseLeft = parseInt($elem.css('left')) || 0;
+
+        $elem.css({
+                position: 'absolute',
+                top:  $(document).scrollTop()  + baseTop,
+                left: $(document).scrollLeft() + baseLeft
+            })
+            .parents().each(function() {
+                if ($(this).css('position') == 'relative') {
+                    $(this).after($elem);
                 }
-                else if (this.nodeType == 3) {
-                    span    = $(this).wrap('<span/>').parent();
-                    splited = span.text().split('').join(splitter);
-                    span.after(splited).remove();
-                }
-            });
-        },
+            })
+        ;
 
-        fixed: function(elem) {
-            var self = $(elem);
-            var baseTop  = parseInt(self.css('top'))  || 0;
-            var baseLeft = parseInt(self.css('left')) || 0;
+        $('html').css({
+            'background-image': 'url(null)',
+            'background-attachment': 'fixed'
+        });
 
-            self.css({
-                    position: 'absolute',
-                    top:  $(document).scrollTop()  + baseTop,
-                    left: $(document).scrollLeft() + baseLeft
-                })
-                .parents().each(function() {
-                    if ($(this).css('position') == 'relative') {
-                        $(this).after(self);
-                    }
-                })
-            ;
+        elem['topVal'] = baseTop;
+        elem.style.setExpression('top', 'documentElement.scrollTop + this.topVal + "px"');
+    },
 
-            $('html').css({
-                'background-image': 'url(null)',
-                'background-attachment': 'fixed'
-            });
+    smoothScroll: function(conf) {
+        var conf = $.extend({
+            noAddHashList: ['#top']
+        }, conf);
 
-            elem['topVal'] = baseTop;
-            elem.style.setExpression('top', 'documentElement.scrollTop + this.topVal + "px"');
-        }
-    };
+        var noAddHashList = conf.noAddHashList || [];
 
-
-    $.Meca.smoothScroll.exec = function() {
-        if (!$.Meca.smoothScroll.config.enable) return;
-
-        $('a[href^="#"]').filter(function() {
-            return $(this).attr('href') != '#';
-        }).click(function() {
+        $(this).click(function() {
             var $elem = $(this);
-            
-            // ターゲット要素がなかったら何もしない
+
             var target_id = $elem.attr('href');
             try {
                 var $target = $(target_id);
@@ -366,77 +171,99 @@
                 return;
             }
 
-            // スムーズスクロールにする
-            $('html, body').animate({
-                    scrollTop: $target.offset().top
-                },
-                $.Meca.smoothScroll.config.duration,
-                $.Meca.smoothScroll.config.easing,
+            $('html, body').animate(
+                { scrollTop: $target.offset().top },
+                'normal',
+                'swing',
                 function() {
-                    if ($elem.is($.Meca.smoothScroll.config.excludeHashSelector)) {
-                        if (location.hash) location.hash = '';
-                    }
-                    else {
+                    if ($.inArray(target_id, noAddHashList) == -1) {
                         location.hash = target_id;
                     }
                 }
             );
             return false;
         });
-    };
+    },
 
-    $.Meca.addOsClass.exec = function() {
-        if (!$.Meca.addOsClass.config.enable) return;
+    addOsClass: function(conf) {
+        var $elem = $(this);
+        var conf = $.extend({
+            winClass: 'osWin',
+            macClass: 'osMac'
+        }, conf);
 
         var ua = navigator.userAgent.toLowerCase();
         if (/windows/.test(ua)) {
-            $('body').addClass($.Meca.addOsClass.config.winClass);
+            $elem.addClass(conf.winClass);
         }
         else if (/mac os x/.test(ua)) {
-            $('body').addClass($.Meca.addOsClass.config.macClass);
+            $elem.addClass(conf.macClass);
         }
-    };
+    },
 
-    $.Meca.labelClickable.exec = function() {
-        if (!$.Meca.labelClickable.config.enable) return;
-
+    labelClickable: function() {
         if(!$.browser.msie) return;
 
-        $('label img').click(function(){
+        $(this).click(function() {
             $('#' + $(this).parents('label').attr('for')).focus().click();
         });
-    };
+    },
 
+    active: function(conf) {
+        var $elem = $(this);
+        var conf  = $.extend({
+            postfix:       '_a',
+            hoverSelector: '.btn',
+            hoverPostfix:  '_o'
+        }, conf);
 
-    /**
-     * active image
-     */
-    $.Meca.active.exec = function() {
-        if (!$.Meca.active.config.enable) return;
-        var hover_conf = $.Meca.hover.config;
+        if (!$elem.attr('src')) return;
 
-        $($.Meca.active.config.selector).each(function() {
-            var self = $(this);
-            if (!self.attr('src')) return;
-            var src   = this.src;
-            var src_a = this.src.replace(/\.\w+$/, $.Meca.active.config.postfix + '$&');
-            var src_base = src;
-            if (hover_conf.enable && self.is(hover_conf.selector)) {
-                src_base = src.replace(/\.\w+$/, hover_conf.postfix + '$&');
-            }
-
-            var img   = new Image();
-            img.src   = src_a;
-            self.mousedown(function() { this.src = src_a; });
-            self.mouseup(function() { this.src = src_base });
-        });
-    };
-
-    $(function() {
-        for (var module in $.Meca) {
-            if ($.Meca[module].exec) {
-                $.Meca[module].exec();
-            }
+        var src   = this.src;
+        var src_a = this.src.replace(/\.\w+$/, conf.postfix + '$&');
+        var src_base = src;
+        if (conf.hoverSelector && $elem.is(conf.hoverSelector)) {
+            src_base = src.replace(/\.\w+$/, conf.hoverPostfix + '$&');
         }
-    });
-})(jQuery);
+
+        var img = new Image();
+        img.src = src_a;
+
+        $elem.mousedown(function() { this.src = src_a; });
+        $elem.mouseup(function()   { this.src = src_base });
+    },
+
+    placeholder: function(conf) {
+        var $elem = $(this);
+        var conf = $.extend({
+            placeholderClass: 'hasPlaceholder',
+            target_attr: 'placeholder'
+        }, conf);
+
+        var placeholder = $(this).attr(conf.target_attr);
+
+        if ($elem.val() == '' || $elem.val() == placeholder) {
+            $elem.val(placeholder).addClass(conf.placeholderClass);
+        }
+
+        $elem
+            .focus(function() {
+                if ( $elem.val() == placeholder ) {
+                    $elem.val('').removeClass(conf.placeholderClass)
+                }
+            })
+            .blur(function() {
+                if ( $elem.val() == '' ) {
+                    $elem.val(placeholder).addClass(conf.placeholderClass);
+                }
+            })
+            .parents('form').bind('submit', function() {
+                if ($elem.val() == placeholder) {
+                    $elem.val('')
+                }
+            });
+        ;
+    }
+};
+
+})();
