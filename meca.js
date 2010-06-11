@@ -6,7 +6,7 @@
  * http://www.opensource.org/licenses/mit-license.php
  *
  * @author   Kazuhito Hokamura (http://webtech-walker.com/)
- * @version  2.0.1
+ * @version  2.1.0
  * @url      http://webtech-walker.com/meca/
  * @github   http://github.com/hokaccha/meca/tree/master
  *
@@ -233,6 +233,38 @@ var funcs = {
 
         $elem.mousedown(function() { this.src = src_a; });
         $elem.mouseup(function() { this.src = src_base });
+    },
+
+    placeholder: function(conf) {
+        var $elem = $(this);
+        var conf = $.extend({
+            placeholderClass: 'hasPlaceholder',
+            target_attr: 'placeholder'
+        }, conf);
+
+        var placeholder = $(this).attr(conf.target_attr);
+
+        if ($elem.val() == '' || $elem.val() == placeholder) {
+            $elem.val(placeholder).addClass(conf.placeholderClass);
+        }
+
+        $elem
+            .focus(function() {
+                if ( $elem.val() == placeholder ) {
+                    $elem.val('').removeClass(conf.placeholderClass)
+                }
+            })
+            .blur(function() {
+                if ( $elem.val() == '' ) {
+                    $elem.val(placeholder).addClass(conf.placeholderClass);
+                }
+            })
+            .parents('form').bind('submit', function() {
+                if ($elem.val() == placeholder) {
+                    $elem.val('')
+                }
+            });
+        ;
     }
 };
 

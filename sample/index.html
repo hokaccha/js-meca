@@ -20,6 +20,7 @@
         <li><a href="#smoothScroll">スムーズスクロール</a></li>
         <li><a href="#addOsClass">OS判別クラスの付加</a></li>
         <li><a href="#labelClickable">IEで画像のlabelをクリック</a></li>
+        <li><a href="#placeholder">placeholder</a></li>
     </ul>
 </nav>
 <div id="main">
@@ -100,6 +101,14 @@
         </div>
         
     </section>
+    <section id="labelClickable" class="content">
+        <h2>placeholder</h2>
+        <form method="get" action="">
+            <p><input type="text" placeholder='入力してね' name="hoge" /></p>
+            <p><textarea placeholder='100文字以内で入力してね' rows="3" cols="20" name="fuga"></textarea></p>
+            <p><input type="submit" />
+        </form>
+    </section>
 </div>
 
 <script src="js/jquery.js"></script>
@@ -135,6 +144,9 @@ $('label img').meca('labelClickable');
 
 // active
 $('.hasActive').meca('active');
+
+// placeholder
+$('input[placeholder], textarea[placeholder]').meca('placeholder');
 </script>
 </body>
 </html>
